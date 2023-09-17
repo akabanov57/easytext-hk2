@@ -1,0 +1,29 @@
+Netflix is a subscription service for T.V. and movie streaming over the internet,
+it has millions of costumers across hundreds of countries streaming thousands of
+titles over millions of devices across the globe. Just in North America, Netflix
+makes a third of internet traffic at night.
+The API traffic has grown from ∼20 million API requests per day (in 2010)
+to >2 billion per day and those requests come from at least 800 different type
+of devices including: smartphones, tablets, smart TVs, PS3s, Wii, Xbox. In
+the procedure of communicating the devices to Netflix, the devices ‘talk’ to a
+facade that contains the services of Netflix, this API layer also has hundreds
+of dependencies, basically links to external services. But, as the complexity of
+the service started to grow, the control over the data dropped off, the quantity
+of requests made at the same time was also an on-going issue, so the Netflix
+team investigated different solutions to this trouble, most of these brought
+implicit problems with it so they asked themselves, “is there another way to
+administrate concurrency?” especially when the amount of data volume varies
+through the day. . .
+The way the Netflix team answered to this was by rearchitecting the API
+infrastructure and reinventing the client-server interaction model since a typical
+device performs at least dozen network calls (each one with a network latency)
+against the Restful API and each call will do about 4 or more service calls, yet
+as a company you don’t really know: the performance of the client’s device, the
+way the network is connected, the latency, among other things. Therefore, if we
+take all the network latencies produced from the multiple requests and sum them
+up, it starts to be a problem; so what it was thought was to collapse those calls
+in one single request, since the servers have much more power than the clients,
+the server then will be the one that perform the heavy computation. Soon, the
+Netflix team started to check different approaches but callbacks, threads and
+concurrency were part of the general concern. Microsoft’s open-source Reactive
+Extensions library (ReactiveX aka Rx) was the key candidate for this situation.
